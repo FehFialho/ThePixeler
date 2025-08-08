@@ -6,4 +6,7 @@ public class Invite
     public int RoomID { get; set; }
     public Guid SenderID { get; set; }
     public Guid ReceiverID { get; set; }
+
+    public Room Room { get; set; }
+    public User User { get; set; }
 }

@@ -4,4 +4,6 @@ public class Subscription
 {
     public int SubscriptionID { get; set; }
     public string Type { get; set; }
+
+    public ICollection<GiftCard> GiftCards { get; set; }
 }

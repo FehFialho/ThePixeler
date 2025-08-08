@@ -8,4 +8,7 @@ public class Pixel
 
     public int xPosition { get; set; }
     public int zPosition { get; set; }
+
+    public Room Room { get; set; }
+    public User User { get; set; }
 }

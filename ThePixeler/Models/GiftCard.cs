@@ -6,4 +6,6 @@ public class GiftCard
     public int SubscriptionID { get; set; }
     public string Code { get; set; }
     public int Months { get; set; }
+
+    public Subscription Subscription { get; set; }
 }
