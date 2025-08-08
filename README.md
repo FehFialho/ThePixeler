@@ -16,5 +16,14 @@ dotnet add package Microsoft.EntityFrameworkCore.Tools
 dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 ```
-* Configuramos cada relacionamento no arquivo DBContext.
-* Priorizar sempre fazer relacionamento de FILHAS PARA PAIS.
+* Configuramos cada relacionamento no DBContext priorizando sempre fazer relacionamento de FILHAS PARA PAIS.
+* Configurar Variavel de ambiente do SQL
+ ```
+ $env:SQL_CONNECTION = "Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=ThePixeler;Trust Server Certificate=true;Integrated Security=true"
+```
+* Configurar Migrations com:
+ ```
+dotnet tool install --global dotnet-ef
+dotnet ef migrations add InitialModel
+dotnet ef database update
+```
