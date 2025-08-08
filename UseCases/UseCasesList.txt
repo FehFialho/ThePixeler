@@ -1,0 +1,20 @@
+- Create Profile
+- Login (Auth)
+- EditProfileData
+
+- ValidateGiftCard
+
+- GetProfile
+- GetRooms
+- GetInvites 
+- GetMembers 
+- GetPlans 
+
+- CreateRoom
+- RespondInvite
+- InviteMember
+- RemoveMember
+- EditMember
+
+- PaintPixel
+- GetPixels

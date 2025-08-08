@@ -27,3 +27,5 @@ dotnet tool install --global dotnet-ef
 dotnet ef migrations add InitialModel
 dotnet ef database update
 ```
+## UseCases
+* Levantamos UseCases necessários para realizar o projeto.
