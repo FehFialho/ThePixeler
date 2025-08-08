@@ -8,5 +8,6 @@ public class Invite
     public Guid ReceiverID { get; set; }
 
     public Room Room { get; set; }
-    public User User { get; set; }
+    public User Receiver { get; set; }
+    public User Sender { get; set; }
 }
