@@ -1,0 +1,1 @@
+namespace ThePixeler.UseCases.EditProfileData;
