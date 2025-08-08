@@ -29,3 +29,5 @@ dotnet ef database update
 ```
 ## UseCases
 * Levantamos UseCases necessários para realizar o projeto.
+* Criamos a classe Result<T> no diretório do Projeto.
+* Definimos entrada e saída de cada UseCase.
