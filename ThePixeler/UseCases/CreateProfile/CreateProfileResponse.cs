@@ -1,3 +1,3 @@
-namespace ThePixeler.UseCase.CreateProfile;
+namespace ThePixeler.UseCases.CreateProfile;
 
 public record CreateProfileResponse;
