@@ -31,3 +31,7 @@ dotnet ef database update
 * Levantamos UseCases necessários para realizar o projeto.
 * Criamos a classe Result<T> no diretório do Projeto.
 * Definimos entrada e saída de cada UseCase.
+
+## Endpoints
+* Dessa vez, levantamos os Endpoints necessários.
+* Será um Endpoints por UseCase, separar por tópicos iguais.
