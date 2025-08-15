@@ -1,6 +1,6 @@
 namespace ThePixeler.UseCases.EditProfileData;
 
-public record EditProfilePayload(
+public record EditProfileDataPayload(
     string UserName,
     string Token
 );

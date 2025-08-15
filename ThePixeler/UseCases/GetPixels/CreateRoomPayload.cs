@@ -1,6 +1,5 @@
 namespace ThePixeler.UseCases.GetPixels;
 
-public record GetPixelsPayload
-{
-    
-}
+public record GetPixelsPayload(
+    Guid UserID
+);

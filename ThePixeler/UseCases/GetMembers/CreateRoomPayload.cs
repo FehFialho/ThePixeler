@@ -1,6 +1,5 @@
 namespace ThePixeler.UseCases.GetMembers;
 
-public record GetMembersPayload
-{
-    
-}
+public record GetMembersPayload(
+    Guid RoomID
+);

@@ -1,6 +1,7 @@
+using ThePixeler.Models;
+
 namespace ThePixeler.UseCases.GetInvites;
 
-public record GetInvitesPayload
-{
-    
-}
+public record GetInvitesPayload(
+    Guid ID
+);

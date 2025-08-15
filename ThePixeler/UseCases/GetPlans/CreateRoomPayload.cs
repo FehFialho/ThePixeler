@@ -1,6 +1,3 @@
 namespace ThePixeler.UseCases.GetPlans;
 
-public record GetPlansPayload
-{
-    
-}
+public record GetPlansPayload;
