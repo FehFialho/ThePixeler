@@ -11,6 +11,8 @@ builder.Services.AddDbContext<ThePixelerDbContext>(options =>
 
 var app = builder.Build();
 
+app.MapGet("/oi", () => "Hello World 2");
+
 app.MapGet("/", () => "Hello World!");
 
 Console.WriteLine("Hello World");
