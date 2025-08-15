@@ -1,3 +1,5 @@
+using ThePixeler.UseCase.CreateProfile;
+
 namespace ThePixeler.UseCases.CreateProfile;
 
 public class CreateProfileUseCase
