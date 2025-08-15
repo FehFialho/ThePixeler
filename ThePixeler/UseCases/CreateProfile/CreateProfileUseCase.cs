@@ -1,4 +1,4 @@
-using ThePixeler.UseCase.CreateProfile;
+using ThePixeler.UseCases.CreateProfile;
 
 namespace ThePixeler.UseCases.CreateProfile;
 
