@@ -1,34 +1,25 @@
+using Microsoft.AspNetCore.Mvc;
+using ThePixeler.UseCases.InviteMember;
+
 namespace ThePixeler.EndPoints;
 // ViewInvites
 public static class ViewInvitesEndPoints
 {
-    public static void ConfigureViewInviteEndpoints(this WebApplication app)
+    public static void ConfigureInviteEndpoints(this WebApplication app)
     {
-        app.MapGet("invites/{userGuid}", (Guid userGuid) => 
+        app.MapGet("invites", () =>
+        {
+            
+        }).RequireAuthorization();
+
+        app.MapPost("send-invite", ([FromBody]InviteMemberPayload payload) => 
         {
 
-        }); //RequireAuthorization();
-    }
-}
-// SendInvite
-public static class SendInviteEndPoints
-{
-    public static void ConfigureSendInviteEndpoints(this WebApplication app)
-    {
-        app.MapPost("send-invite/{userGuid}", (Guid userGuid) => 
-        {
+        }).RequireAuthorization();
 
-        }); //RequireAuthorization();
-    }
-}
-// RespondInvite
-public static class RespondInviteEndPoints
-{
-    public static void ConfigureRespondInviteEndpoints(this WebApplication app)
-    {
         app.MapPost("respond-invite/{inviteId}/{response}", (int inviteId, bool response) => 
         {
 
-        }); //RequireAuthorization();
-    }    
+        }).RequireAuthorization();
+    }
 }

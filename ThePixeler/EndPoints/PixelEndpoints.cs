@@ -1,23 +1,18 @@
 namespace ThePixeler.EndPoints;
 // ViewPixels
-public static class ViewPixelsEndPoints
+public static class PixelsEndPoints
 {
-    public static void ConfigureViewPixelsEndpoints(this WebApplication app)
+    public static void PixelsEndpoints(this WebApplication app)
     {
-        app.MapGet("pixels/{roomId}", (int roomId) => 
+        app.MapGet("pixels/{roomId}", (int roomId) =>
+        {
+
+        }); //RequireAuthorization();
+
+        app.MapPost("paint-pixel/{roomID}/{painterID}/{x}-{y}", (int roomID, int painterID, int x, int y) =>
         {
 
         }); //RequireAuthorization();
     }
-}
-// PaintPixel
-public static class PaintPixelEndPoints
-{
-    public static void ConfigurePaintPixelEndpoints(this WebApplication app)
-    {
-        app.MapPost("paint-pixel/{roomID}/{painterID}/{x}-{y}", (int roomID, int painterID ,int x, int y) => 
-        {
 
-        }); //RequireAuthorization();
-    }
 }

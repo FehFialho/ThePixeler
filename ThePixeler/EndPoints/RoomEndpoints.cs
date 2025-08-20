@@ -11,24 +11,18 @@ public static class CreateRoomEndPoints
     }
 }
 // ViewRooms
-public static class ViewRoomsEndPoints
+public static class RoomsEndPoints
 {
-    public static void ConfigureViewRoomsEndpoints(this WebApplication app)
+    public static void RoomsEndpoints(this WebApplication app)
     {
-        app.MapGet("rooms/{userID}", (int userID) => 
+        app.MapGet("rooms", () =>
         {
 
         }); //RequireAuthorization();
-    }   
-}
-// ViewMembers
-public static class ViewMembersEndPoints
-{
-    public static void ConfigureViewMembersEndpoints(this WebApplication app)
-    {
+
         app.MapGet("members/{roomID}", (int roomID) => 
         {
 
         }); //RequireAuthorization();
-    }      
+    }   
 }
