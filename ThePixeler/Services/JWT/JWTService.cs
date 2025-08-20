@@ -12,7 +12,7 @@ public class JWTService : IJWTService
         var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET");
         var keyBytes = Encoding.UTF8.GetBytes(jwtSecret);
         var key = new SymmetricSecurityKey(keyBytes);
-        
+
         var jwt = new JwtSecurityToken(
             // CONFIGURAR CLAIMS!
             claims: [
@@ -30,3 +30,32 @@ public class JWTService : IJWTService
         return handler.WriteToken(jwt);
     }
 }
+
+
+// interface SecurityAlgorithmsaaaaa
+// {
+//     public JWTData getData(string token);
+// }
+// public class sla : SecurityAlgorithmsaaaaa
+// {
+//     public JWTData getData(string token)
+//     {
+//         return new("d","a");
+//     }
+// }
+// public class SecurityAlgorithmsaaaaaaa
+// {
+//     void slla()
+//     {
+//         var jwtService = new sla();
+//         var userData = jwtService.getData("AAA");
+
+//         System.Console.WriteLine(userData.);
+//     }
+// }
+
+// record JWTData
+// (
+//     string name,
+//     string role
+// );
