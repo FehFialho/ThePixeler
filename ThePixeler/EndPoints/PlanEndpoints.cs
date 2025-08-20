@@ -9,9 +9,9 @@ public static class PlansEndPoints
 
         });
 
-        app.MapPost("rescue-card/{code}", (int code) => 
+        app.MapPost("rescue-card/{code}", (string code) => 
         {
 
-        }); //RequireAuthorization();
+        }).RequireAuthorization();
     }
 }

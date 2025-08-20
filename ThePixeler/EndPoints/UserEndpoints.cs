@@ -4,24 +4,24 @@ public static class AuthEndPoints
 {
     public static void ConfigureAuthEndpoints(this WebApplication app)
     {
-        app.MapPost("auth/{username}/{password}", (string username, string password) =>
+        app.MapPost("auth", ([FromBody]LoginPayload payload) =>
         {
-            // Mudar Depois
+            // Auth
         });
 
-        app.MapPost("change-info/{userID}/{info}", (int userID, string info) =>
+        app.MapPost("change-info", ([FromBody]EditProfileDataPayload payload) =>
         {
 
-        }); //RequireAuthorization();
+        }).RequireAuthorization();
 
-        app.MapPost("view-profile/{userID}", (int userID) =>
+        app.MapPost("view-profile", ([FromBody]GetProfilePayload payload) =>
         {
 
         });
 
-        app.MapPost("create-user/{username}/{password}", (string username, string password) =>
+        app.MapPost("create-user", ([FromBody]CreateProfilePayload payload) =>
         {
-            //MUDAR DEPOIS
+            
         }); 
     }
 }

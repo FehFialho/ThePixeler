@@ -4,15 +4,15 @@ public static class MemberEndPoints
 {
     public static void MemberEndpoints(this WebApplication app)
     {
-        app.MapPost("edit-member/{userGuid}", (Guid userGuid) =>
+        app.MapPut("edit-member/{userGuid}", (Guid userGuid) =>
         {
 
-        }); //RequireAuthorization();
+        }).RequireAuthorization();
     
         app.MapDelete("remove-member/{userGuid}", (Guid userGuid) => 
         {
 
-        }); //RequireAuthorization();
+        }).RequireAuthorization();
     
     }
 }

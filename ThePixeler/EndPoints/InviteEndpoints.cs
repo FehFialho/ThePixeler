@@ -9,15 +9,15 @@ public static class ViewInvitesEndPoints
     {
         app.MapGet("invites", () =>
         {
-            
+            // Pedir HTTP Request com o Token 
         }).RequireAuthorization();
 
         app.MapPost("send-invite", ([FromBody]InviteMemberPayload payload) => 
         {
-
+            // Invites a Member
         }).RequireAuthorization();
 
-        app.MapPost("respond-invite/{inviteId}/{response}", (int inviteId, bool response) => 
+        app.MapPost("respond-invite", ([FromBody]RespondInvitePayload payload) => 
         {
 
         }).RequireAuthorization();
