@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Mvc;
+using ThePixeler.UseCases.GetPixels;
+using ThePixeler.UseCases.PaintPixel;
+
 namespace ThePixeler.EndPoints;
 // ViewPixels
 public static class PixelsEndPoints

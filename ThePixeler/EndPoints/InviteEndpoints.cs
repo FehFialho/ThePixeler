@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ThePixeler.UseCases.InviteMember;
+using ThePixeler.UseCases.RespondInvite;
 
 namespace ThePixeler.EndPoints;
 // ViewInvites
@@ -17,9 +18,9 @@ public static class ViewInvitesEndPoints
             // Invites a Member
         }).RequireAuthorization();
 
-        app.MapPost("respond-invite", ([FromBody]RespondInvitePayload payload) => 
+        app.MapPost("respond-invite", ([FromBody]RespondInvitePayload payload, HttpRequest request) => 
         {
-
+            // Pegar JWT request.Headers.Authorization
         }).RequireAuthorization();
     }
 }
