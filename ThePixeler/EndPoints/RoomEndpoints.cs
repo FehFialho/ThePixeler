@@ -2,27 +2,22 @@ namespace ThePixeler.EndPoints;
 // CreateRoom
 public static class CreateRoomEndPoints
 {
-    public static void ConfigureCreateRoomEndpoints(this WebApplication app)
+    public static void ConfigureRoomEndpoints(this WebApplication app)
     {
-        app.MapPost("create-room/{userID}/{height}-{width}", (int userID, int height, int width) => 
+        app.MapPost("create-room", ([FromBody]CreateRoomPayload) => 
         {
 
-        }); //RequireAuthorization();
-    }
-}
-// ViewRooms
-public static class RoomsEndPoints
-{
-    public static void RoomsEndpoints(this WebApplication app)
-    {
+        }).RequireAuthorization();
+
+        // ViewRooms
         app.MapGet("rooms", () =>
         {
 
-        }); //RequireAuthorization();
+        }).RequireAuthorization();
 
-        app.MapGet("members/{roomID}", (int roomID) => 
+        app.MapGet("members", ([FromBody]GetMembersPayload payload) => 
         {
-
-        }); //RequireAuthorization();
-    }   
+            // Get Room Members
+        }).RequireAuthorization();
+    }
 }
