@@ -1,0 +1,89 @@
+CONFIGURAÇÃO INICIAL
+1. Criar o projeto
+Comando: dotnet new web
+O que faz: Cria uma aplicação ASP.NET Core vazia (pronto para API).
+
+2. Ignorar arquivos desnecessários
+Comando: dotnet new gitignore
+O que faz: Gera um arquivo .gitignore para evitar que arquivos temporários ou sensíveis sejam versionados (útil se usar Git).
+
+CONFIGURANDO O BANCO DE DADOS
+3. Adicionar pacotes do Entity Framework
+Comandos:
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+O que faz: Instala tudo o que você precisa para usar EF Core com SQL Server, fazer migrations, e gerar o banco.
+
+4. Definir variável de ambiente com string de conexão
+Comando:
+$env:SQL_CONNECTION = "Data Source=localhost;Initial Catalog=Fofoquinha;Trust Server Certificate=true;Integrated Security=true"
+O que faz: Define a string de conexão com o banco SQL Server sem deixar exposta no código (mais seguro e flexível).
+
+5. Criar os modelos
+O que faz: Você define suas classes de domínio (ex: User, Room, Role, etc).
+Essas classes representam tabelas no banco.
+
+6. Criar a classe DbContext
+O que faz: Essa classe gerencia a conexão com o banco e contém os DbSet<Model> que representam cada tabela.
+É a ponte entre código e banco.
+
+7. Configurar o DbContext no Program.cs
+O que faz: Injeta o DbContext no sistema de injeção de dependência e lê a conexão da variável de ambiente.
+Exemplo: builder.Services.AddDbContext<AppDbContext>(...)
+
+MIGRAÇÕES E BANCO
+8. Instalar ferramenta de linha de comando EF
+Comando: dotnet tool install --global dotnet-ef
+O que faz: Permite rodar comandos como dotnet ef migrations add e dotnet ef database update.
+
+9. Criar e aplicar a migration inicial
+Comandos:
+dotnet ef migrations add InitialModel
+dotnet ef database update
+O que faz:
+add: Gera o código que cria as tabelas no banco com base nos modelos.
+update: Aplica essas mudanças ao banco real.
+
+LÓGICA DE NEGÓCIO
+10. Definir UseCases
+O que faz: Você separa a lógica de cada funcionalidade (ex: CriarSala, RegistrarUsuario) em classes específicas.
+Torna seu código modular e mais testável.
+
+11. Definir Payloads e Responses
+O que faz: Define as classes que representam:
+O que o usuário envia (Payload).
+O que sua API retorna (Response).
+Ajuda a manter o controle sobre os dados que entram e saem.
+
+API
+12. Implementar os Endpoints
+O que faz: Cria os endpoints da API (ex: POST /user, GET /room) que chamam os UseCases internamente.
+
+13. Configurar UseCases como serviços
+O que faz: Registra os UseCases no container de injeção de dependência para que possam ser usados nos endpoints automaticamente.
+
+AUTENTICAÇÃO E DOCUMENTAÇÃO
+14. Adicionar pacote de autenticação JWT
+Comando: dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+O que faz: Permite proteger endpoints com tokens JWT.
+
+15. Habilitar e configurar Swagger
+Comando: dotnet add package Swashbuckle.AspNetCore
+O que faz: Gera uma interface web com a documentação e teste da sua API.
+
+TESTES
+16. Adicionar pacotes de teste
+Comandos:
+dotnet add package xunit
+dotnet add package xunit.runner.visualstudio
+dotnet add package Microsoft.NET.Test.Sdk
+dotnet add package Moq
+O que faz: Prepara o projeto para testes unitários com xUnit e simulações com Moq.
+
+17. Definir e implementar testes
+O que faz: Cria classes de teste para validar os UseCases e comportamentos importantes da aplicação.
+
+18. Configurar e implementar serviços
+O que faz: Caso tenha serviços auxiliares (ex: envio de e-mail, geração de token), você os define e registra no projeto.

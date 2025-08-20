@@ -1,0 +1,14 @@
+Models --> 
+Serve para definir quais tipos de dados um objeto irá receber
+
+
+DbContext --> 
+DbSet<> define as tabelas do banco.
+
+OnModelCreating configura os relacionamentos (ex: 1 usuário pode estar em vários RoomUser).
+
+.HasOne().WithMany() define relação de muitos-para-um.
+
+.HasForeignKey() define a FK na tabela.
+
+.OnDelete(DeleteBehavior.NoAction) evita exclusão em cascata.
