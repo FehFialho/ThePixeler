@@ -1,4 +1,4 @@
-namespace ThePixeler.Services.Password;
+namespace ThePixeler.Services.IPasswordServices;
 
 public interface IPasswordService
 {
