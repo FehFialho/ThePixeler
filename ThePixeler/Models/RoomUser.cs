@@ -10,4 +10,6 @@ public class RoomUser
     public Room Room { get; set; }
     public Role Role { get; set; }
     public User User { get; set; }
+
+    // Talvez seja necessário adicionar um RoleTarget.
 }

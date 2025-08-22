@@ -5,5 +5,33 @@ public interface IExtractJWTData
     Task<Guid> GetUserGuid();
     Task<int> GetUserSubscriptionID();
     Task<string> GetUserUsername();
-    
+
 }
+
+// interface SecurityAlgorithmsaaaaa
+// {
+//     public JWTData getData(string token);
+// }
+// public class sla : SecurityAlgorithmsaaaaa
+// {
+//     public JWTData getData(string token)
+//     {
+//         return new("d","a");
+//     }
+// }
+// public class SecurityAlgorithmsaaaaaaa
+// {
+//     void slla()
+//     {
+//         var jwtService = new sla();
+//         var userData = jwtService.getData("AAA");
+
+//         System.Console.WriteLine(userData.);
+//     }
+// }
+
+// record JWTData
+// (
+//     string name,
+//     string role
+// );
