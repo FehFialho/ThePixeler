@@ -2,5 +2,6 @@ namespace ThePixeler.Services.JWT;
 
 public record ProfileToAuth(
     Guid ProfileId,
-    string Username
+    string Username,
+    int SubscriptionID
 );

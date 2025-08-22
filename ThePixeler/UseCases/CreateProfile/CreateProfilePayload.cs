@@ -13,9 +13,11 @@ public record CreateProfilePayload
     [MinLength(8)]
     [MaxLength(8)]
     public string Password { get; set; }
-    
+
     [Required]
     [EmailAddress]
     public string Email { get; set; }
-    public string Image { get; set; }
+    public string ProfilePicture { get; set; }
+    
+    public string ProfileBio { get; set; }
 }

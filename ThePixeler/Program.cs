@@ -19,7 +19,7 @@ var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET");
 var keyBytes = Encoding.UTF8.GetBytes(jwtSecret);
 var key = new SymmetricSecurityKey(keyBytes);
 
-// Começo Config
+// Começo MAIN Config JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -34,22 +34,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = key,
         };
     });
-// Fim Config
-
+    
+// Fim MAIN Config JWT
 
 // builder.Services.AddEndpointsApiExplorer();
 // builder.Services.AddSwaggerGen();
 
-builder.Services.AddAuthentication(); // Config
-builder.Services.AddAuthorization(); // Config
+builder.Services.AddAuthentication(); // Config JWT
+builder.Services.AddAuthorization(); // Config JWT
 
 var app = builder.Build();
 
 // app.UseSwagger();
 // app.UseSwaggerUI();
 
-app.UseAuthentication(); // Config
-app.UseAuthorization(); // Config
+app.UseAuthentication(); // Config JWT
+app.UseAuthorization(); // Config JWT
 
 
 // Rodando!
