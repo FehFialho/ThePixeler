@@ -1,0 +1,12 @@
+Payloads => 
+Payloads são os dados que você envia para a API dentro do corpo da requisição (geralmente em JSON). 
+Eles servem para informar à API o que você quer que ela faça, fornecendo as informações necessárias para criar, atualizar, buscar ou responder a algo.
+Quando você quer criar algo novo (ex: usuário, sala, convite), o payload contém os dados desse novo recurso.
+Para atualizar informações, o payload traz os novos dados a serem aplicados.
+Para filtrar ou buscar dados específicos, o payload pode conter critérios ou parâmetros da busca.
+Para executar ações específicas (como responder a um convite), o payload traz os detalhes que indicam qual ação tomar.
+Payload é o conjunto de dados enviados para a API para que ela entenda a sua intenção e processe a requisição corretamente.
+
+EndpointRespondInvitePayload =>
+é um tipo que representa os dados enviados para a API ao responder um convite. 
+Ele contém o ID do convite e a resposta (aceitar ou recusar). Pode existir em diferentes namespaces para fins de organização ou teste.
