@@ -1,0 +1,2 @@
+UseCases -->
+São os serviços que a aplicação deve fornecer para o usuario 

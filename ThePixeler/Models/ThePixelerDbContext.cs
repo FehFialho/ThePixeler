@@ -18,6 +18,7 @@ public class ThePixelerDbContext(DbContextOptions options) : DbContext(options)
 // Aqui definimos configurações avançadas, como relacionamentos entre tabelas
     protected override void OnModelCreating(ModelBuilder model)
     {   // Configura relacionamento entre RoomUser e User (muitos para um)
+    
         // RoomUser
         model.Entity<RoomUser>()
             .HasOne(ru => ru.User)// Um RoomUser tem um User
