@@ -1,0 +1,73 @@
+Services =>
+- Executam a lógica de negócio da aplicação.
+- Fazem o "trabalho pesado" entre os endpoints e o banco de dados.
+- Deixam o código organizado, limpo e reutilizável.
+- Ex: criar usuário, validar convite, pintar pixel, etc.
+- Evitam colocar regras diretamente nos endpoints.
+
+Estrutura dos Services na API =>
+- Payload: Objeto que representa os dados enviados para a API para executar uma ação.
+- Response: Objeto que representa os dados retornados pela API após processar a requisição.
+- Use Case (Service): Camada que contém a lógica de negócio para processar o Payload e gerar a Response.
+
+
+EFExtractJWTData => Implementação 
+
+IExtractJWTData => Interface
+Esse service extrai informações do usuário a partir do token JWT.
+Ele é usado quando a API precisa saber quem está fazendo a requisição, sem pedir os dados de novo.
+O que ele faz:
+GetUserGuid() → retorna o ID do usuário (GUID) contido no token.
+GetUserSubscriptionID() → retorna o ID da assinatura do usuário.
+GetUserUsername() → retorna o nome de usuário.
+Serve para pegar os dados do usuário logado com base no token JWT (sem acessar banco).
+
+IJWTService => Interface
+Define o contrato para criar tokens JWT.
+Método principal: CreateToken(ProfileToAuth data) que gera o token a partir dos dados do usuário.
+Criar tokens JWT que serão usados para autenticação e autorização.
+
+JWTService => Implementação
+Cria o token JWT assinando com uma chave secreta (JWT_SECRET).
+Insere claims no token com dados do usuário (ID, nome, role).
+Define o tempo de expiração do token (ex: 2 horas).
+Usa biblioteca Microsoft para manipular JWTs.
+Garantir segurança da API ao assinar e controlar a validade dos tokens.
+
+ProfileToAuth => Record
+Estrutura que representa os dados do usuário usados para gerar o token.
+Campos: 
+ProfileId (GUID)
+Username (string)
+SubscriptionID (int)
+Permitir que a API reconheça o usuário em cada requisição por meio do token.
+
+IPasswordService => Interface 
+Define a estrutura para serviços que lidam com senhas.
+Métodos principais:
+Hash(string password): cria o hash da senha.
+Compare(string password, string hash): compara senha com o hash para validar.
+
+PBKDF2PasswordService => Implementação 
+Implementa o IPasswordService usando o algoritmo PBKDF2 via PasswordHasher do ASP.NET.
+Hash: gera o hash seguro da senha.
+Compare: verifica se a senha fornecida corresponde ao hash armazenado.
+Garante segurança ao armazenar e validar senhas.
+Proteger senhas transformando-as em hashes seguros antes de salvar.
+Validar senhas conferindo se a senha digitada bate com o hash armazenado.
+Garantir segurança para o sistema evitando armazenar senhas em texto puro.
+
+IProfilesService => Interface 
+Define os métodos para gerenciar perfis de usuários.
+Métodos principais:
+Create(User profile): cria um novo perfil e retorna seu ID.
+FindByLogin(string login): busca um usuário pelo nome ou email.
+
+EFProfileService => Implementação 
+Implementa IProfilesService usando Entity Framework (EF Core).
+Create: adiciona o perfil ao banco e salva.
+FindByLogin: busca o usuário no banco pelo username ou email.
+Gerenciar perfis de usuários no banco de dados.
+Permitir criação de novos usuários e busca eficiente por login.
+Facilitar a manipulação dos dados dos usuários na aplicação.
+

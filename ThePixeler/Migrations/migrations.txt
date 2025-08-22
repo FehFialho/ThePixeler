@@ -20,11 +20,6 @@ Down(): apaga todas as tabelas, em ordem reversa (caso precise reverter).
 Por que isso importa?
 É o esqueleto inicial do banco. Sem essa migration, nada do que você modelou nos arquivos .cs vira tabela no SQL Server.
 
-
-
-
-
-
 Arquivo: InitialModel.Designer.cs
 
 Função: 
