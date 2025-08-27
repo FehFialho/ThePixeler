@@ -1,16 +1,15 @@
-using System.Runtime;
 using ThePixeler.Models;
-using ThePixeler.Services.Authorization;
 using ThePixeler.Services.IPasswordServices;
 using ThePixeler.Services.Profiles;
-using ThePixeler.UseCases.CreateProfile;
+using ThePixeler.Services.Subscription;
 
 namespace ThePixeler.UseCases.CreateProfile;
 
 public class CreateProfileUseCase
 (
     IProfilesService profilesService,
-    IPasswordService passwordService
+    IPasswordService passwordService,
+    ISubscriptionService subscriptionService
 )
 {
     public async Task<Result<CreateProfileResponse>> Do(CreateProfilePayload payload)
@@ -21,7 +20,8 @@ public class CreateProfileUseCase
             Password = passwordService.Hash(payload.Password),
             Email = payload.Email,
             ProfilePicture = payload.ProfilePicture,
-            ProfileBio = payload.ProfileBio
+            ProfileBio = payload.ProfileBio,
+            SubscriptionID = (int)UserSubscription.Gratuito
             //Subscription =  Settar Subscription Padrõa como Default
         };
 

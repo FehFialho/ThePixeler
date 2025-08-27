@@ -1,6 +1,6 @@
 using ThePixeler.Models;
 
-namespace ThePixeler.Services.Authorization;
+namespace ThePixeler.Services.Role;
 
 public enum RoomRole
 {
@@ -10,7 +10,8 @@ public enum RoomRole
     Plateia
 }
 
-public interface IAuthorizationService
+public interface IRoleService
 {
     Task<RoomRole> GetRole(int roleId);
+
 }

@@ -1,8 +1,8 @@
 using ThePixeler.Models;
 
-namespace ThePixeler.Services.Authorization;
+namespace ThePixeler.Services.Role;
 
-public class EFAuthorizationService(ThePixelerDbContext ctx)
+public class EFRoleService(ThePixelerDbContext ctx)
 {
     public async Task<RoomRole> GetRole(int roleId)
     {
