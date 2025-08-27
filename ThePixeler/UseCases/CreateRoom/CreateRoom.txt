@@ -1,0 +1,22 @@
+CreateRoomUseCase
+Esse Use Case será responsável por criar uma sala (room) dentro do sistema, levando em conta as restrições da assinatura (subscription) do usuário.
+
+1.CreateRoomPayload.cs =>
+
+| Campo      | Descrição                                |
+| ---------- | ---------------------------------------- |
+| `RoomName` | Nome da sala a ser criada                |
+| `Width`    | Largura da sala (em pixels, tiles, etc.) |
+| `Height`   | Altura da sala                           |
+
+2. CreateRoomResponse.cs =>
+Por enquanto, está vazio, ou seja, o retorno só indica sucesso sem enviar nenhuma informação específica.
+
+3. CreateRoomUseCase.cs =>
+
+Extrai a assinatura do usuário (Subscription ID) do JWT (token de autenticação), usando o serviço IExtractJWTData
+Verifica se a assinatura permite criar uma sala com aquele tamanho (Width x Height)
+As assinaturas diferentes terão limites de tamanho (por exemplo: grátis = 500x500, premium = 2000x2000)
+Cria um novo objeto Room com as informações do payload
+(Falta implementar): Salvar a sala no banco (ainda não foi implementado)
+Retorna um Result<CreateRoomResponse>.Success(new()), indicando que a operação foi bem-sucedida

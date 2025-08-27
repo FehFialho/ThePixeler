@@ -1,2 +1,17 @@
-UseCases -->
+UseCases =>
 São os serviços que a aplicação deve fornecer para o usuario 
+Regra de negócio centralizada em uma ação específica do sistema
+Cada Use Case representa uma tarefa principal (ex: criar perfil, pintar sala)
+Não lida com detalhes técnicos (como banco ou API), só com o que deve acontecer segundo as regras da aplicação
+
+Payloads => 
+São os dados de entrada que o Use Case precisa para funcionar
+Define quais informações o sistema espera receber para executar aquela ação
+
+Responses => 
+São os dados de saída — ou seja, o que o Use Case retorna depois de ser executado
+Envia de volta as informações úteis, como o ID do novo pedido criado, status, mensagens, etc
+
+Use Case =>
+É onde fica a regra de negócio. Ele usa o Payload como entrada, executa o processo necessário, e retorna um Response
+É a parte principal, que diz o que o sistema deve fazer com os dados recebidos
