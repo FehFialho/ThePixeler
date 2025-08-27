@@ -1,5 +1,6 @@
 using System.Runtime;
 using ThePixeler.Models;
+using ThePixeler.Services.Authorization;
 using ThePixeler.Services.IPasswordServices;
 using ThePixeler.Services.Profiles;
 using ThePixeler.UseCases.CreateProfile;
@@ -20,7 +21,7 @@ public class CreateProfileUseCase
             Password = passwordService.Hash(payload.Password),
             Email = payload.Email,
             ProfilePicture = payload.ProfilePicture,
-            ProfileBio = payload.ProfileBio,
+            ProfileBio = payload.ProfileBio
             //Subscription =  Settar Subscription Padrõa como Default
         };
 
