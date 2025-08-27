@@ -1,18 +1,32 @@
 using ThePixeler.Models;
 using ThePixeler.Services.ExtractJWTData;
+using ThePixeler.Services.Subscription;
 
 namespace ThePixeler.UseCases.CreateRoom;
 
 public class CreateRoomUseCase(
-    IExtractJWTData extractJWTData
+    IExtractJWTData extractJWTData,
+    ISubscriptionService subscriptionService,
+    ThePixelerDbContext ctx
 )
 {
     public async Task<Result<CreateRoomResponse>> Do(CreateRoomPayload payload)
     {
+        var userID = await extractJWTData.GetUserGuid(payload.HttpContext);
+        var user = await ctx.Users.FindAsync(userID);
 
-        var UserSubscription = extractJWTData.GetUserSubscriptionID(); // Pegar o ID ou a própria Sub?
+        var maxSize = 64;
+        var subscriptionID = await extractJWTData.GetUserSubscriptionID(payload.HttpContext);
+        var subscription = await subscriptionService.GetSubscription(subscriptionID);
 
-        // Fazer IF para checar subscription e se o tamanho da sala é compatível.
+        // Verificação de Tamanho Máximo.
+        if (subscription == UserSubscription.Gold)
+            maxSize = 128;
+        else if (subscription == UserSubscription.PLatinum)
+            maxSize = 256;
+
+        if (payload.Width > maxSize && payload.Height > maxSize)
+            return Result<CreateRoomResponse>.Fail("Tamanho máximo excedido!");
 
         var room = new Room
         {
@@ -21,7 +35,10 @@ public class CreateRoomUseCase(
             Height = payload.Height
         };
 
-        // Criação da Sala
+        user.Rooms.Add(room);
+        // Adicionar Sala em Salas do User
+        ctx.Rooms.Add(room);
+        await ctx.SaveChangesAsync();
 
         return Result<CreateRoomResponse>.Success(new());
     }

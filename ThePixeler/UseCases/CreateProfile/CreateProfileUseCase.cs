@@ -22,7 +22,6 @@ public class CreateProfileUseCase
             ProfilePicture = payload.ProfilePicture,
             ProfileBio = payload.ProfileBio,
             SubscriptionID = (int)UserSubscription.Gratuito
-            //Subscription =  Settar Subscription Padrõa como Default
         };
 
         await profilesService.Create(user);
