@@ -11,5 +11,5 @@ public class RoomUser
     public Role Role { get; set; }
     public User User { get; set; }
 
-    // Talvez seja necessário adicionar um RoleTarget.
+    // Talvez seja necessário adicionar um RoleTarget para o Invite.
 }

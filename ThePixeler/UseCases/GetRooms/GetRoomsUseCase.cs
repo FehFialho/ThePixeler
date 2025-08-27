@@ -1,9 +1,15 @@
+using ThePixeler.Models;
+
 namespace ThePixeler.UseCases.GetRoom;
 
-public class GetRoomUseCase
+public class GetRoomUseCase(ThePixelerDbContext ctx)
 {
     public async Task<Result<GetRoomResponse>> Do(GetRoomPayload payload)
     {
-        return Result<GetRoomResponse>.Success(null);
+        var user = await ctx.Users.FindAsync(payload.User);
+
+        var rooms = user.Rooms;
+
+        return Result<GetRoomResponse>.Success();
     }
 }
