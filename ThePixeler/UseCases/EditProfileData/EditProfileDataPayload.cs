@@ -2,6 +2,7 @@ namespace ThePixeler.UseCases.EditProfileData;
 
 public record EditProfileDataPayload(
     string UserName,
-    string Token
+    string Token,
+    HttpContext HttpContext
 );
     

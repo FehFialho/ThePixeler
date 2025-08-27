@@ -4,10 +4,10 @@ namespace ThePixeler.Services.Role;
 
 public enum RoomRole
 {
-    Dono,
-    Adm,
-    Pintor,
-    Plateia
+    Dono = 4,
+    Adm = 3,
+    Pintor = 2,
+    Plateia = 1
 }
 
 public interface IRoleService

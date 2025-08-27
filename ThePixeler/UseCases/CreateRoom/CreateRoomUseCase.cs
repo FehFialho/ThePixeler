@@ -16,6 +16,7 @@ public class CreateRoomUseCase(
         var user = await ctx.Users.FindAsync(userID);
 
         var maxSize = 64;
+        
         var subscriptionID = await extractJWTData.GetUserSubscriptionID(payload.HttpContext);
         var subscription = await subscriptionService.GetSubscription(subscriptionID);
 

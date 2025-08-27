@@ -14,6 +14,7 @@ public class InviteMemberUseCase( ThePixelerDbContext ctx )
             SenderID = payload.SenderID
         };
 
+        // O invite vai automaticamente para a lista de invites do Receiver?
         ctx.Invites.Add(invite);
         await ctx.SaveChangesAsync();
 
