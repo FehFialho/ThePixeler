@@ -1,0 +1,33 @@
+CreateProfileUseCase --> Cria um novo perfil de usuário no sistema
+
+1. CreateProfilePayload.cs =>
+Entrada de dados (input)
+Contém os dados que o usuário precisa enviar para criar um perfil:
+
+| Campo            | Descrição                        | Regras de validação                  |
+| ---------------- | -------------------------------- | ------------------------------------ |
+| `UserName`       | Nome do usuário                  | Obrigatório, 8 a 20 caracteres       |
+| `Password`       | Senha                            | Obrigatória, exatamente 8 caracteres |
+| `Email`          | Email do usuário                 | Obrigatório, precisa ser um email    |
+| `ProfilePicture` | (Opcional) URL da foto de perfil | —                                    |
+| `ProfileBio`     | (Opcional) Biografia do perfil   | —                                    |
+
+
+2. CreateProfileResponse.cs =>
+Saída de dados (output)
+Está vazio por enquanto (record CreateProfileResponse {}), ou seja, o Use Case só retorna que deu certo, mas não envia informações específicas de volta.
+
+
+3. CreateProfileUseCase.cs =>
+
+O que ele faz passo a passo:
+Recebe os dados do payload (input).
+Cria um novo objeto User com essas informações.
+Usa o serviço IPasswordService para criar um hash seguro da senha.
+Usa o serviço IProfilesService para salvar o novo usuário no banco de dados.
+Retorna um Result<...>.Success(...) indicando que deu tudo certo.
+
+Observações:
+Ele usa injeção de dependência para acessar os serviços (profilesService, passwordService).
+A senha nunca é salva diretamente — ela é hasheada antes de ser salva (boa prática de segurança).
+Comentário indica que ainda será adicionado um campo padrão de "subscription".
