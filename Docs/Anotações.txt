@@ -63,6 +63,7 @@ O que faz: Cria os endpoints da API (ex: POST /user, GET /room) que chamam os Us
 
 13. Configurar UseCases como serviços
 O que faz: Registra os UseCases no container de injeção de dependência para que possam ser usados nos endpoints automaticamente.
+PASSE O MOUSE SOBRE A VARIÁVEL. SE FOR UMA TASK, ELA NECESSITA DE UM AWAIT
 
 AUTENTICAÇÃO E DOCUMENTAÇÃO
 14. Adicionar pacote de autenticação JWT
