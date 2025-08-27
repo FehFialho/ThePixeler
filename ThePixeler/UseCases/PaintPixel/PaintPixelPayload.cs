@@ -6,5 +6,5 @@ public record PaintPixelPayload(
     int y,
     Color color,
     Guid PainterID,
-    Guid roomID
+    int roomID
 );

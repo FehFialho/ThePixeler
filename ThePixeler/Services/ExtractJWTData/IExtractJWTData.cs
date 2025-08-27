@@ -2,9 +2,9 @@ namespace ThePixeler.Services.ExtractJWTData;
 
 public interface IExtractJWTData
 {
-    Task<Guid> GetUserGuid();
-    Task<int> GetUserSubscriptionID();
-    Task<string> GetUserUsername();
+    Task<Guid> GetUserGuid(HttpContext context);
+    Task<int> GetUserSubscriptionID(HttpContext context);
+    Task<string> GetUserUsername(HttpContext context);
 
 }
 
