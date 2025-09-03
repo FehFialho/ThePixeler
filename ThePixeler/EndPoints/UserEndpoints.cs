@@ -10,24 +10,45 @@ public static class AuthEndPoints
 {
     public static void ConfigureAuthEndpoints(this WebApplication app)
     {
-        app.MapPost("auth", ([FromBody]LoginPayload payload) =>
+        //ok
+        app.MapPost("auth", async (
+            [FromBody] LoginPayload payload,
+            [FromServices]LoginUseCase useCase) =>
         {
-            // Auth
+            var result = await useCase.Do(payload);
+            if (!result.IsSuccess)
+                return Results.BadRequest();
+            return Results.Ok(result.Data);
         });
-
-        app.MapPost("change-info", ([FromBody]EditProfileDataPayload payload) =>
+        //mudar aqui e o useCase
+        app.MapPost("change-info", (
+            [FromServices] EditProfileData useCase,
+            [FromBody] EditProfileDataPayload payload) =>
         {
 
         }).RequireAuthorization();
-
-        app.MapPost("view-profile", ([FromBody]GetProfilePayload payload) =>
+        //ok
+        app.MapPost("view-profile", async (
+            [FromServices] GetProfileUseCase useCase,
+            [FromBody] GetProfilePayload payload) =>
         {
+            var result = await useCase.Do(payload);
+
+            if (!result.IsSuccess)
+                return Results.BadRequest();
+            return Results.Ok(result.Data);
 
         });
-
-        app.MapPost("create-user", ([FromBody]CreateProfilePayload payload) =>
+        //ok
+        app.MapPost("createUser", async (
+            [FromServices] CreateProfileUseCase useCase,
+            [FromBody] CreateProfilePayload payload) =>
         {
-            
+            var result = await useCase.Do(payload);
+
+            if (!result.IsSuccess)
+                return Results.BadRequest();
+            return Results.Ok(result.Data);
         }); 
     }
 }

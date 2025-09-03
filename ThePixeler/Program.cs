@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using ThePixeler.EndPoints;
 using ThePixeler.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,7 +48,7 @@ var app = builder.Build();
 
 // app.UseSwagger();
 // app.UseSwaggerUI();
-
+app.ConfigureAuthEndpoints();
 app.UseAuthentication(); // Config JWT
 app.UseAuthorization(); // Config JWT
 

@@ -8,9 +8,16 @@ public static class CreateRoomEndPoints
 {
     public static void ConfigureRoomEndpoints(this WebApplication app)
     {
-        app.MapPost("create-room", ([FromBody]CreateRoomPayload payload) => 
+        app.MapPost("create-room", async (
+            [FromServices] CreateRoomUseCase useCase,
+            [FromBody] CreateRoomPayload payload) =>
         {
+            var result = await useCase.Do(payload);
 
+            if (!result.IsSuccess)
+                return Results.BadRequest();
+            return Results.Ok(result.Data);
+            
         }).RequireAuthorization();
 
         // ViewRooms
