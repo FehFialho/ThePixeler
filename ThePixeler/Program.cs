@@ -4,6 +4,28 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ThePixeler.EndPoints;
 using ThePixeler.Models;
+using ThePixeler.Services.ExtractJWTData;
+using ThePixeler.Services.IPasswordServices;
+using ThePixeler.Services.JWT;
+using ThePixeler.Services.PBKDF2PasswordService;
+using ThePixeler.Services.Profiles;
+using ThePixeler.Services.Role;
+using ThePixeler.UseCases.CreateProfile;
+using ThePixeler.UseCases.CreateRoom;
+using ThePixeler.UseCases.EditMember;
+using ThePixeler.UseCases.EditProfileData;
+using ThePixeler.UseCases.GetInvites;
+using ThePixeler.UseCases.GetMembers;
+using ThePixeler.UseCases.GetPixels;
+using ThePixeler.UseCases.GetPlans;
+using ThePixeler.UseCases.GetProfile;
+using ThePixeler.UseCases.GetRoom;
+using ThePixeler.UseCases.InviteMember;
+using ThePixeler.UseCases.Login;
+using ThePixeler.UseCases.PaintPixel;
+using ThePixeler.UseCases.RemoveMember;
+using ThePixeler.UseCases.RespondInvite;
+using ThePixeler.UseCases.ValidateGiftCard;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +35,31 @@ builder.Services.AddDbContext<ThePixelerDbContext>(options =>
     var sqlConn = Environment.GetEnvironmentVariable("SQL_CONNECTION");
     options.UseSqlServer(sqlConn);
 });
+
+// Configurar Serviços
+builder.Services.AddTransient<IExtractJWTData, EFExtractJWTData>();
+builder.Services.AddSingleton<IJWTService, JWTService>();
+builder.Services.AddTransient<IPasswordService, PBKDF2PasswordService>();
+builder.Services.AddTransient<IProfilesService, EFProfileService>();
+//builder.Services.AddTransient<IRoleService, EFRoleService>();
+
+//Configurar UseCases
+builder.Services.AddTransient<CreateProfileUseCase>();
+builder.Services.AddTransient<CreateRoomUseCase>();
+builder.Services.AddTransient<EditMemberUseCase>();
+builder.Services.AddTransient<EditProfileData>();
+builder.Services.AddTransient<GetInvitesUseCase>();
+builder.Services.AddTransient<GetMembersUseCase>();
+builder.Services.AddTransient<GetPixelsUseCase>();
+builder.Services.AddTransient<GetPlansUseCase>();
+builder.Services.AddTransient<GetProfileUseCase>();
+builder.Services.AddTransient<GetRoomUseCase>();
+builder.Services.AddTransient<InviteMemberUseCase>();
+builder.Services.AddTransient<LoginUseCase>();
+builder.Services.AddTransient<PaintPixelUseCase>();
+builder.Services.AddTransient<RemoveMemberUseCase>();
+builder.Services.AddTransient<RespondInviteUseCase>();
+builder.Services.AddTransient<ValidateGiftCardUseCase>();
 
 // Autenticação JWT
 
