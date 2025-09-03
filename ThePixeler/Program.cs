@@ -10,6 +10,7 @@ using ThePixeler.Services.JWT;
 using ThePixeler.Services.PBKDF2PasswordService;
 using ThePixeler.Services.Profiles;
 using ThePixeler.Services.Role;
+using ThePixeler.Services.Subscription;
 using ThePixeler.UseCases.CreateProfile;
 using ThePixeler.UseCases.CreateRoom;
 using ThePixeler.UseCases.EditMember;
@@ -41,7 +42,8 @@ builder.Services.AddTransient<IExtractJWTData, EFExtractJWTData>();
 builder.Services.AddSingleton<IJWTService, JWTService>();
 builder.Services.AddTransient<IPasswordService, PBKDF2PasswordService>();
 builder.Services.AddTransient<IProfilesService, EFProfileService>();
-//builder.Services.AddTransient<IRoleService, EFRoleService>();
+builder.Services.AddTransient<IRoleService, EFRoleService>();
+builder.Services.AddTransient<ISubscriptionService, EFSubscriptionService>();
 
 //Configurar UseCases
 builder.Services.AddTransient<CreateProfileUseCase>();

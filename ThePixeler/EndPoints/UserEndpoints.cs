@@ -14,12 +14,13 @@ public static class AuthEndPoints
         app.MapPost("auth", async (
             [FromBody] LoginPayload payload,
             [FromServices]LoginUseCase useCase) =>
-        {
+        {   
             var result = await useCase.Do(payload);
             if (!result.IsSuccess)
                 return Results.BadRequest();
             return Results.Ok(result.Data);
         });
+
         //mudar aqui e o useCase
         app.MapPost("change-info", (
             [FromServices] EditProfileData useCase,
@@ -27,8 +28,9 @@ public static class AuthEndPoints
         {
 
         }).RequireAuthorization();
+
         //ok
-        app.MapPost("view-profile", async (
+        app.MapGet("view-profile", async (
             [FromServices] GetProfileUseCase useCase,
             [FromBody] GetProfilePayload payload) =>
         {

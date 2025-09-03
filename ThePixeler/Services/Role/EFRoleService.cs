@@ -2,7 +2,7 @@ using ThePixeler.Models;
 
 namespace ThePixeler.Services.Role;
 
-public class EFRoleService(ThePixelerDbContext ctx)
+public class EFRoleService(ThePixelerDbContext ctx) : IRoleService
 {
     public async Task<RoomRole> GetRole(int roleId)
     {

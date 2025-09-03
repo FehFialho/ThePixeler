@@ -14,6 +14,7 @@ public class CreateProfileUseCase
 {
     public async Task<Result<CreateProfileResponse>> Do(CreateProfilePayload payload)
     {
+        Console.Write(payload);
         var user = new User
         {
             Username = payload.UserName,

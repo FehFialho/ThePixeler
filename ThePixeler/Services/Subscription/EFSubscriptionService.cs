@@ -2,7 +2,7 @@ using ThePixeler.Models;
 
 namespace ThePixeler.Services.Subscription;
 
-public class EFSubscriptionService(ThePixelerDbContext ctx)
+public class EFSubscriptionService(ThePixelerDbContext ctx) : ISubscriptionService
 {
     public async Task<UserSubscription> GetSubscription(int subscriptionID)
     {
