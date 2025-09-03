@@ -8,14 +8,24 @@ public static class PixelsEndPoints
 {
     public static void PixelsEndpoints(this WebApplication app)
     {
-        app.MapGet("pixels", ([FromBody]GetPixelsPayload payload) =>
+        app.MapGet("pixels", async (
+            [FromServices] GetPixelsUseCase useCase,
+            [FromBody] GetPixelsPayload payload) =>
         {
-            // Get 
+            var result = await useCase.Do(payload);
+            if (!result.IsSuccess)
+                return Results.BadRequest();
+            return Results.Ok(result.Data);
         }).RequireAuthorization();
 
-        app.MapPost("paint-pixel", ([FromBody]PaintPixelPayload payload) =>
+        app.MapPost("paint-pixel", async (
+            [FromServices] PaintPixelUseCase useCase,
+            [FromBody] PaintPixelPayload payload) =>
         {
-
+            var result = await useCase.Do(payload);
+            if (!result.IsSuccess)
+                return Results.BadRequest();
+            return Results.Ok(result.Data);
         }).RequireAuthorization();
     }
 

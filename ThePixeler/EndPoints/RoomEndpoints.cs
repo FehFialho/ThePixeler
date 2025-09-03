@@ -21,14 +21,20 @@ public static class CreateRoomEndPoints
         }).RequireAuthorization();
 
         // ViewRooms
-        app.MapGet("rooms", () =>
+        app.MapGet("rooms/", async () =>
         {
 
         }).RequireAuthorization();
 
-        app.MapGet("members", ([FromBody]GetMembersPayload payload) => 
+        app.MapGet("members", async (
+            [FromServices] GetMembersUseCase useCase,
+            [FromBody] GetMembersPayload payload) => 
         {
-            // Get Room Members
+             var result = await useCase.Do(payload);
+
+            if (!result.IsSuccess)
+                return Results.BadRequest();
+            return Results.Ok(result.Data);
         }).RequireAuthorization();
     }
 }
