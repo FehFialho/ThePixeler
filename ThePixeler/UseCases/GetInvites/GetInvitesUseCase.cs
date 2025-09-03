@@ -10,9 +10,8 @@ public class GetInvitesUseCase(
 {
     public async Task<Result<GetInvitesResponse>> Do(GetInvitesPayload payload)
     {
-        // precisa mesmo do payload?
-        var userGuid = extractJWTData.GetUserGuid(payload.HttpContext);
         // Procurar o usuário no banco e retornar as salas dele.
+        var userGuid = extractJWTData.GetUserGuid(payload.HttpContext);
         var user = await ctx.Users.FindAsync(userGuid);
         
         if (user == null)

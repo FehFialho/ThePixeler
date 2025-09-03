@@ -15,3 +15,8 @@ Envia de volta as informações úteis, como o ID do novo pedido criado, status,
 Use Case =>
 É onde fica a regra de negócio. Ele usa o Payload como entrada, executa o processo necessário, e retorna um Response
 É a parte principal, que diz o que o sistema deve fazer com os dados recebidos
+
+
+IMPORTANTE =>
+CTX.Objeto.Add(objeto)
+await ctx.SaveChangesAsync();

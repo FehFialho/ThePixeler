@@ -4,16 +4,15 @@ namespace ThePixeler.Services.Subscription;
 
 public class EFSubscriptionService(ThePixelerDbContext ctx)
 {
-    // public async Task<RoomRole> GetRole(int roleId)
-    // {
-    //     var role = await ctx.Roles.FindAsync(roleId);
+    public async Task<UserSubscription> GetSubscription(int subscriptionID)
+    {
+        var sub = await ctx.Subscriptions.FindAsync(subscriptionID);
 
-    //     return role.RoleName switch
-    //     {
-    //         "Dono" => RoomRole.Dono,
-    //         "Adm" => RoomRole.Adm,
-    //         "Pintor" => RoomRole.Pintor,
-    //         _ => RoomRole.Plateia
-    //     };
-    // }
+        return sub.Type switch
+        {
+            "Gold" => UserSubscription.Gold,
+            "Platinum" => UserSubscription.PLatinum,
+            _ => UserSubscription.Gratuito
+        };
+    }
 }
