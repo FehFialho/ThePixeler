@@ -10,7 +10,7 @@ public static class AuthEndPoints
 {
     public static void ConfigureAuthEndpoints(this WebApplication app)
     {
-        //ok
+        // Auntenticação
         app.MapPost("auth", async (
             [FromBody] LoginPayload payload,
             [FromServices]LoginUseCase useCase) =>
@@ -21,15 +21,20 @@ public static class AuthEndPoints
             return Results.Ok(result.Data);
         });
 
-        //mudar aqui e o useCase
-        app.MapPost("change-info", (
+        //mudar aqui e o useCase / Mudar as Informações
+        app.MapPost("change-info", async (
             [FromServices] EditProfileData useCase,
             [FromBody] EditProfileDataPayload payload) =>
         {
+            var result = await useCase.Do(payload);
+
+            if (!result.IsSuccess)
+                return Results.BadRequest();
+            return Results.Ok(result.Data);
 
         }).RequireAuthorization();
 
-        //ok
+        //Visualizar Perfil
         app.MapGet("view-profile", async (
             [FromServices] GetProfileUseCase useCase,
             [FromBody] GetProfilePayload payload) =>
@@ -39,9 +44,9 @@ public static class AuthEndPoints
             if (!result.IsSuccess)
                 return Results.BadRequest();
             return Results.Ok(result.Data);
-
         });
-        //ok
+        
+        //Crear um novo usuario
         app.MapPost("createUser", async (
             [FromServices] CreateProfileUseCase useCase,
             [FromBody] CreateProfilePayload payload) =>

@@ -1,4 +1,4 @@
-Payloads => 
+DTO (Payloads) => 
 Payloads são os dados que você envia para a API dentro do corpo da requisição (geralmente em JSON). 
 Eles servem para informar à API o que você quer que ela faça, fornecendo as informações necessárias para criar, atualizar, buscar ou responder a algo.
 Quando você quer criar algo novo (ex: usuário, sala, convite), o payload contém os dados desse novo recurso.

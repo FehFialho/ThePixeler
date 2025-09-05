@@ -1,5 +1,7 @@
 namespace ThePixeler.UseCases.ValidateGiftCard;
 
 public record ValidateGiftCardPayload(
-    int Code
+    int userId,
+    int code,
+    int subscriptionID
 );

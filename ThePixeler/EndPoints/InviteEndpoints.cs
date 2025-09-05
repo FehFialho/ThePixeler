@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using ThePixeler.UseCases.InviteMember;
 using ThePixeler.UseCases.RespondInvite;
+using ThePixeler.UseCases.GetInvites;
+using ThePixeler.Services.ExtractJWTData;
+using Microsoft.Extensions.Configuration.UserSecrets;
+using ThePixeler.EndPoints.DTOs;
 
 namespace ThePixeler.EndPoints;
 // ViewInvites
@@ -8,27 +12,57 @@ public static class ViewInvitesEndPoints
 {
     public static void ConfigureInviteEndpoints(this WebApplication app)
     {
-        app.MapGet("invites", (
+
+        // Get de invites
+        app.MapGet("invites", async (
+            [FromServices] GetInvitesUseCase useCase,
+            [FromServices] EFExtractJWTData extractJWTData,
+            HttpContext context
         ) =>
         {
-            // Pedir HTTP Request com o Token 
+            var userID = await extractJWTData.GetUserGuid(context);
+            if (userID is null)
+                return Results.Unauthorized();
+
+            var result = await useCase.Do(new (userID.Value)); // JWT Extract
+            if (!result.IsSuccess)
+                return Results.BadRequest();
+            return Results.Ok(result.Data);
         }).RequireAuthorization();
 
+        // Enviar Convite
         app.MapPost("send-invite", async (
             [FromServices] InviteMemberUseCase useCase,
-            [FromBody] InviteMemberPayload payload) => 
+            [FromServices] EFExtractJWTData extractJWTData,
+            [FromBody] InviteMemberPayload payload,
+            InviteEndpointDTO dto,
+            HttpContext context
+        ) => 
         {
+            var senderID = await extractJWTData.GetUserGuid(context);
+            if (senderID is null)
+                return Results.Unauthorized();
+
+            // new InviteEndpointDTO
+            // {
+
+            // }
+
             var result = await useCase.Do(payload);
             if (!result.IsSuccess)
                 return Results.BadRequest();
             return Results.Ok(result.Data);
         }).RequireAuthorization();
 
-        app.MapPost("respond-invite", (
+        // Responder um Convite
+        app.MapPost("respond-invite", async (
+            [FromServices] RespondInviteUseCase useCase,
             [FromBody] RespondInvitePayload payload, HttpRequest request) =>
         {
-            
-            // Pegar JWT request.Headers.Authorization
+            var result = await useCase.Do(payload);
+            if (!result.IsSuccess)
+                return Results.BadRequest();
+            return Results.Ok(result.Data);
         }).RequireAuthorization();
     }
 }

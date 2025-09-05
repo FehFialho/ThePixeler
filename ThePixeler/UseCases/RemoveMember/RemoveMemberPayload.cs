@@ -1,5 +1,6 @@
 namespace ThePixeler.UseCases.RemoveMember;
 
 public record RemoveMemberPayload(
-    Guid UserID
+    Guid userID, 
+    Guid targetID
 );

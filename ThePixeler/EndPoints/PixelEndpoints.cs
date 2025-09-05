@@ -8,6 +8,7 @@ public static class PixelsEndPoints
 {
     public static void PixelsEndpoints(this WebApplication app)
     {
+        // Mostrar Pixels da sala
         app.MapGet("pixels", async (
             [FromServices] GetPixelsUseCase useCase,
             [FromBody] GetPixelsPayload payload) =>
@@ -18,6 +19,7 @@ public static class PixelsEndPoints
             return Results.Ok(result.Data);
         }).RequireAuthorization();
 
+        //Pintar Pixels
         app.MapPost("paint-pixel", async (
             [FromServices] PaintPixelUseCase useCase,
             [FromBody] PaintPixelPayload payload) =>
