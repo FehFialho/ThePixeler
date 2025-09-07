@@ -24,8 +24,11 @@ dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 ```
 * Configurar cada relacionamento no DBContext priorizando sempre fazer relacionamento de FILHAS PARA PAIS.
+* Uma configuração por flecha do DER.
 * Relações N-N não precisam de .OnDelete e FK.
-* Criar um novo DataBase no SQL.
+
+## Conexão com SQL 
+* Criar um novo DataBase no SSMS.
 * Configurar Variavel de ambiente do SQL.
  ```
  $env:SQL_CONNECTION = "Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=ThePixeler;Trust Server Certificate=true;Integrated Security=true"
@@ -53,5 +56,5 @@ dotnet ef database update
 * Usar alguns serviços.
 * Se necessário, criar DTOs para completar as informçãoes (DTOs são os Payloads do Endpoint).
 
-## Endpoints
+## Swagger
 * Habilitar Swagger.
