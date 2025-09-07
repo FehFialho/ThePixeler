@@ -11,6 +11,9 @@
 ## Navigations
 * Relacionar as tabelas colocando os objetos de outras tabelas.
 * Devem estar sempre em par.
+* Quando há FK, criar uma propriedade de navegação para a entidade relacionada.
+* Na relacionada, criar uma ICollection<T> com o nome da entidade que contém a FK, representando a relação de um-para-muitos.
+* Por exemplo, se existe uma classe Book que tem Author, na classe Author teria: ```public ICollection<Book> Books { get; set; } = new List<Book>();```
 
 ## DBContext
 * Instalar o DBContext pelo terminal com os seguintes comandos:
@@ -21,6 +24,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 ```
 * Configurar cada relacionamento no DBContext priorizando sempre fazer relacionamento de FILHAS PARA PAIS.
+* Relações N-N não precisam de .OnDelete e FK.
 * Criar um novo DataBase no SQL.
 * Configurar Variavel de ambiente do SQL.
  ```
@@ -33,3 +37,21 @@ dotnet tool install --global dotnet-ef
 dotnet ef migrations add InitialModel
 dotnet ef database update
 ```
+* Se algo nas Models for alterado rodar ```add InitialModel``` e ```database update```.
+
+## UseCases
+* Definir o que vai ser necessário para o aplicativo e listar.
+* Reparar em código que se repete para criar Serviços.
+* Configurar Payloads e Response antes de implementar.
+
+## Payload e Response
+* Definir o que vai chegar e sair dos UseCases.
+* Listar Namespace corretamente.
+
+## Endpoints
+* Utilizar UseCases para implementar os Endpoints.
+* Usar alguns serviços.
+* Se necessário, criar DTOs para completar as informçãoes (DTOs são os Payloads do Endpoint).
+
+## Endpoints
+* Habilitar Swagger.
