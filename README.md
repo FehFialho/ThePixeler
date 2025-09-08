@@ -26,6 +26,14 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 * Configurar cada relacionamento no DBContext priorizando sempre fazer relacionamento de FILHAS PARA PAIS.
 * Uma configuração por flecha do DER.
 * Relações N-N não precisam de .OnDelete e FK.
+* Abaixo, código para o ```Program.cs```
+```
+builder.Services.AddDbContext<ThePixelerDbContext>(options =>
+{
+    var sqlConn = Environment.GetEnvironmentVariable("SQL_CONNECTION");
+    options.UseSqlServer(sqlConn);
+});
+```
 
 ## Conexão com SQL 
 * Criar um novo DataBase no SSMS.
@@ -51,10 +59,14 @@ dotnet ef database update
 * Definir o que vai chegar e sair dos UseCases.
 * Listar Namespace corretamente.
 
+## JWT
+```dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer```
+```$env:JWT_SECRET```
+
 ## Endpoints
 * Utilizar UseCases para implementar os Endpoints.
 * Usar alguns serviços.
 * Se necessário, criar DTOs para completar as informçãoes (DTOs são os Payloads do Endpoint).
 
 ## Swagger
-* Habilitar Swagger.
+* Habilitar Swagger com ```dotnet add package Swashbuckle.AspNetCore```
