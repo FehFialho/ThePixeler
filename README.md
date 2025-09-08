@@ -52,6 +52,7 @@ dotnet ef database update
 
 ## UseCases
 * Definir o que vai ser necessário para o aplicativo e listar.
+* Criar a classe Result na raiz do projeto.
 * Reparar em código que se repete para criar Serviços.
 * Configurar Payloads e Response antes de implementar.
 
