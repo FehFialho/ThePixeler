@@ -31,3 +31,5 @@
 singleton > global (Classes/Serviços simples sem dados ou variáveis)
 transient >  cria toda vez (Outros Serviços)
 scoped > tempo de vida associado ao escopo (Serviços relacionados ao banco de dados)
+
+Lembrar de colocar await ctx.SaveChangesAsync(); ao fazer mudanças!
