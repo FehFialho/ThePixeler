@@ -1,0 +1,33 @@
+> Criar database no SQL Server
+> dotnet new web
+> Baixar MEF
+	dotnet add package Microsoft.EntityFrameworkCore
+	dotnet add package Microsoft.EntityFrameworkCore.Tools
+	dotnet add package Microsoft.EntityFrameworkCore.Design
+	dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+> Criar Pasta Entities (Models)
+> Fazer Navigations (sempre em par)
+	1 Navigation gera 1 Icollection!
+
+> Criar DbContext
+	- Fazer DbSet em todas as entidades.
+> Configurar FKs
+	- Sempre das Filhas para o pai .HasOne(m => m.Profile) 
+> Configurar DBContext no Program.cs
+	- antes do App.MapGet
+	- Depois do var app = builder.Build();
+> Fazer Migration com MEF
+> Criar pastas dos UseCases
+> Criar Pasta Result
+	- Biblioteca add package UseCases
+> Criar Classe Result
+> Criar Response e Requests (Payloads)
+	-  Usar DTO (Objetos para Transferência de Dados)
+	- Querries tem FindAsync (Para IDs) e FirstOrDefaultAsync (QualquerCoisa)
+> JWT
+	- ProfileToAuth também pode ser no Models
+
+
+singleton > global (Classes/Serviços simples sem dados ou variáveis)
+transient >  cria toda vez (Outros Serviços)
+scoped > tempo de vida associado ao escopo (Serviços relacionados ao banco de dados)
