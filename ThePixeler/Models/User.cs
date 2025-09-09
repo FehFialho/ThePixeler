@@ -13,6 +13,7 @@ public class User
     public DateTime ExpirationDate { get; set; }
 
     public ICollection<RoomUser> RoomUsers { get; set; }
+    public ICollection<Room> Rooms { get; set; } // New
     public ICollection<Invite> InvitesSended { get; set; }
     public ICollection<Invite> InvitesReceived { get; set; }
     public ICollection<Pixel> Pixels { get; set; }

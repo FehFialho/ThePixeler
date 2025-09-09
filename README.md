@@ -48,6 +48,7 @@ dotnet tool install --global dotnet-ef
 dotnet ef migrations add InitialModel
 dotnet ef database update
 ```
+  
 * Se algo nas Models for alterado rodar ```add InitialModel``` e ```database update```.
 
 ## UseCases
@@ -71,3 +72,4 @@ dotnet ef database update
 
 ## Swagger
 * Habilitar Swagger com ```dotnet add package Swashbuckle.AspNetCore```
+

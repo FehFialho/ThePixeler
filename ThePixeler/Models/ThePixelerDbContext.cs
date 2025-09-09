@@ -2,9 +2,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ThePixeler.Models;
 
+// Context do banco de dados, herda DbContext do EF Core
 public class ThePixelerDbContext(DbContextOptions options) : DbContext(options)
 {
-
+    // DbSets representam as tabelas do banco, uma para cada entidade/modelo
     public DbSet<GiftCard> giftCards => Set<GiftCard>();
     public DbSet<Invite> Invites => Set<Invite>();
     public DbSet<Pixel> Pixels => Set<Pixel>();
@@ -14,14 +15,17 @@ public class ThePixelerDbContext(DbContextOptions options) : DbContext(options)
     public DbSet<Subscription> Subscriptions => Set<Subscription>();
     public DbSet<User> Users => Set<User>();
 
+// Aqui definimos configurações avançadas, como relacionamentos entre tabelas
     protected override void OnModelCreating(ModelBuilder model)
-    {
+    {   // Configura relacionamento entre RoomUser e User (muitos para um)
+        //Em uma relação N para N não colocar o OnDelete!!
+
         // RoomUser
         model.Entity<RoomUser>()
-            .HasOne(ru => ru.User)
-            .WithMany(u => u.RoomUsers)
-            .HasForeignKey(ru => ru.UserID)
-            .OnDelete(DeleteBehavior.NoAction);
+            .HasOne(ru => ru.User)// Um RoomUser tem um User
+            .WithMany(u => u.RoomUsers)// Um User pode ter muitos RoomUsers
+            .HasForeignKey(ru => ru.UserID)// Chave estrangeira
+            .OnDelete(DeleteBehavior.NoAction);// Não exclui em cascata
 
         model.Entity<RoomUser>()
             .HasOne(ru => ru.Role)

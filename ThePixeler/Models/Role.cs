@@ -6,4 +6,5 @@ public class Role
     public string RoleName { get; set; }
 
     public ICollection<RoomUser> RoomUsers { get; set; }
+    
 }

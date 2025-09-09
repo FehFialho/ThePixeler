@@ -1,0 +1,81 @@
+Arquivo: InitialModel.cs
+
+Função:
+Cria todas as tabelas do banco de dados da aplicação pela primeira vez.
+
+Cria as seguintes tabelas:
+Roles: cargos dos usuários nas salas (ex: Admin, Membro)
+Rooms: salas para desenhar (com altura, largura e nome)
+Subscriptions: tipos de planos (ex: gratuito, premium)
+giftCards: códigos de assinatura (ligados a uma subscription)
+Users: informações dos usuários + plano vinculado
+Invites: convites entre usuários para entrar em salas
+Pixels: pixels desenhados por usuários em salas
+RoomUsers: quem está em qual sala e com qual papel
+
+Define chaves primárias e estrangeiras para relacionar tudo.
+Cria índices nas colunas usadas em joins, para melhorar performance.
+Down(): apaga todas as tabelas, em ordem reversa (caso precise reverter).
+
+Por que isso importa?
+É o esqueleto inicial do banco. Sem essa migration, nada do que você modelou nos arquivos .cs vira tabela no SQL Server.
+
+Arquivo: InitialModel.Designer.cs
+
+Função: 
+Representa o modelo atual do banco de dados, com base nas classes (DbContext + Models).
+
+O que esse arquivo faz:
+Gerado automaticamente pelo Entity Framework após criar a migration.
+Define como as classes do projeto viram tabelas no banco.
+Configura as propriedades, chaves primárias, relacionamentos e constraints.
+Usa o método BuildTargetModel() para descrever a estrutura do banco em tempo de build.
+
+O que ele registra:
+Todas as entidades (GiftCard, User, Room, etc.)
+Tipos dos campos (ex: nvarchar, int, uniqueidentifier, etc.)
+Quais campos são obrigatórios (IsRequired)
+Chaves estrangeiras (ex: User -> Subscription, Invite -> Room)
+Relacionamentos 1:N e N:N
+Navegações (HasOne, WithMany, etc.)
+
+Importante:
+Esse arquivo não deve ser editado manualmente. 
+Ele é gerado pelo comando:
+dotnet ef migrations add InitialModel
+
+Pra que serve na prática?
+Serve como um "espelho" que o EF usa pra comparar com o código atual e gerar novas migrations, caso tenha alterações.
+
+
+
+
+
+Arquivo: ThePixelerDbContextModelSnapshot.cs
+
+Função:
+Representa um "espelho atual" do banco de dados. É como o EF Core "lembra" da última versão conhecida do modelo.
+
+O que esse arquivo faz?
+Ele registra o estado do modelo de dados no momento da última migration aplicada.
+Serve para o EF Core comparar com o novo modelo quando você cria uma nova migration.
+É criado automaticamente com cada migration.
+Usa o método BuildModel() para descrever como o banco está depois de aplicar as migrations anteriores.
+
+Diferença entre esse e o .Designer.cs
+.Designer.cs => ModelSnapshot.cs
+Mostra o que será aplicado => Mostra o que já foi aplicado
+Define a migration atual => Guarda a estrutura mais recente
+Apaga ao remover a migration => Permanece como "histórico" do banco
+
+O que ele contém?
+Todas as entidades (User, Room, Pixel, etc.)
+Propriedades, tipos e constraints
+Relacionamentos e foreign keys
+Navegações (WithMany, HasOne)
+É praticamente um espelho do seu DbContext
+
+Observações:
+Não editar manualmente.
+É essencial para o EF Core entender o que mudou no modelo ao criar novas migrations.
+Se for apagado ou alterado incorretamente, pode causar problemas em futuras migrations.

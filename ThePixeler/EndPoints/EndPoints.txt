@@ -1,0 +1,60 @@
+EndPoints => Endpoints são os "endereços" da API. Cada endpoint representa uma rota específica que o cliente 
+(ex: front-end, aplicativo, etc.) pode usar para enviar ou receber dados do servidor.
+
+| Método   | Ação                | Para que serve                                |
+| -------- | ------------------- | --------------------------------------------- |
+| `GET`    | Ler                 | Buscar dados (ex: listar usuários)            |
+| `POST`   | Criar               | Enviar novos dados (ex: cadastrar usuário)    |
+| `PUT`    | Atualizar (total)   | Modificar todos os dados de um item existente |
+| `PATCH`  | Atualizar (parcial) | Modificar parte dos dados                     |
+| `DELETE` | Deletar             | Remover um item do banco de dados             |
+
+InvitesEndPoints =>
+
+| Método | Rota              | Descrição                                          | Detalhes                                                              |
+| ------ | ----------------- | -------------------------------------------------- | --------------------------------------------------------------------- |
+| `GET`  | `/invites`        | Buscar convites pendentes para o usuário.          | Recebe token no header (JWT).                                         |
+| `POST` | `/send-invite`    | Enviar convite para um membro.                     | Recebe dados no corpo (`InviteMemberPayload`).                        |
+| `POST` | `/respond-invite` | Responder a um convite recebido (aceitar/recusar). | Recebe dados no corpo (`RespondInvitePayload`) e token JWT no header. |
+
+MemberEndPoints =>
+
+| Método   | Rota                        | Descrição                                | Detalhes                     |
+| -------- | --------------------------- | ---------------------------------------- | ---------------------------- |
+| `PUT`    | `/edit-member/{userGuid}`   | Editar dados do membro com ID `userGuid` | `userGuid` é passado na URL. |
+| `DELETE` | `/remove-member/{userGuid}` | Remover membro com ID `userGuid`         | `userGuid` é passado na URL. |
+
+PixelsEndPoints =>
+
+| Método | Rota           | Descrição                 | Autorização | Payload (Body)      |
+| ------ | -------------- | ------------------------- | ----------- | ------------------- |
+| GET    |  /pixels       | Buscar pixels (detalhes?) |   Sim       |  GetPixelsPayload   |
+| POST   |  /paint-pixel  | Pintar um pixel           |   Sim       |  PaintPixelPayload  |
+
+PlanEndPoints =>
+
+| Método | Rota                  | Descrição                   | Autorização | Payload (Body/URL) |
+| ------ | --------------------- | --------------------------- | ----------- | ------------------ |
+| GET    | `/plans`              | Listar planos disponíveis   | **Não**     | Nenhum             |
+| POST   | `/rescue-card/{code}` | Resgatar cartão pelo código | **Sim**     | Código na URL      |
+
+RoomEndPoints =>
+
+| Método | Rota           | Descrição                  | Autorização | Payload (Body)      |
+| ------ | -------------- | -------------------------- | ----------- | ------------------- |
+| POST   | `/create-room` | Criar uma nova sala        | **Sim**     | `CreateRoomPayload` |
+| GET    | `/rooms`       | Listar salas existentes    | **Sim**     | Nenhum              |
+| GET    | `/members`     | Buscar membros de uma sala | **Sim**     | `GetMembersPayload` |
+
+
+UserEndPoints =>
+
+| Método | Rota            | Descrição               | Autorização | Payload (Body)           |
+| ------ | --------------- | ----------------------- | ----------- | ------------------------ |
+| POST   | `/auth`         | Fazer login             | **Não**     | `LoginPayload`           |
+| POST   | `/change-info`  | Alterar dados do perfil | **Sim**     | `EditProfileDataPayload` |
+| POST   | `/view-profile` | Visualizar perfil       | **Não**     | `GetProfilePayload`      |
+| POST   | `/create-user`  | Criar novo usuário      | **Não**     | `CreateProfilePayload`   |
+
+
+

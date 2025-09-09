@@ -83,6 +83,15 @@ namespace ThePixeler.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PixelID"));
 
+                    b.Property<int>("B")
+                        .HasColumnType("int");
+
+                    b.Property<int>("G")
+                        .HasColumnType("int");
+
+                    b.Property<int>("R")
+                        .HasColumnType("int");
+
                     b.Property<int>("RoomID")
                         .HasColumnType("int");
 
@@ -92,7 +101,7 @@ namespace ThePixeler.Migrations
                     b.Property<int>("xPosition")
                         .HasColumnType("int");
 
-                    b.Property<int>("zPosition")
+                    b.Property<int>("yPosition")
                         .HasColumnType("int");
 
                     b.HasKey("PixelID");
@@ -136,10 +145,15 @@ namespace ThePixeler.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Width")
                         .HasColumnType("int");
 
                     b.HasKey("RoomID");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("Rooms");
                 });
@@ -285,6 +299,13 @@ namespace ThePixeler.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ThePixeler.Models.Room", b =>
+                {
+                    b.HasOne("ThePixeler.Models.User", null)
+                        .WithMany("Rooms")
+                        .HasForeignKey("UserID");
+                });
+
             modelBuilder.Entity("ThePixeler.Models.RoomUser", b =>
                 {
                     b.HasOne("ThePixeler.Models.Role", "Role")
@@ -353,6 +374,8 @@ namespace ThePixeler.Migrations
                     b.Navigation("Pixels");
 
                     b.Navigation("RoomUsers");
+
+                    b.Navigation("Rooms");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,24 @@
+EditMemberUseCase
+Esse Use Case é responsável por editar o cargo (role) de um membro dentro de uma sala, garantindo que o usuário editor tenha autoridade suficiente para isso.
+
+1. EditMemberPayload.cs =>
+Campo	    Descrição
+EditorID	ID do usuário que está tentando editar o cargo
+TargetID	ID do usuário que terá o cargo alterado
+NewRole	Novo cargo a ser atribuído ao membro
+HttpContext	Contexto HTTP para extrair dados do JWT
+
+2. EditMemberResponse.cs =>
+Retorno vazio. Indica apenas se a operação foi um sucesso ou falha (sem dados extras).
+
+3. EditMemberUseCase.cs =>
+
+Extrai o ID do usuário logado a partir do JWT (IExtractJWTData)
+Busca no banco o usuário alvo (TargetID) e seu cargo atual
+Busca o usuário editor (quem está tentando mudar o cargo) e seu cargo
+
+Verifica se o cargo do editor é maior que o do alvo
+→ Se não for, retorna erro: "Seu cargo precisa ser maior!"
+Se a verificação passar:
+Altera o cargo do usuário alvo para o NewRole
+Retorna Result<EditMemberResponse>.Success(null)

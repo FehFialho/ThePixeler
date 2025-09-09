@@ -1,0 +1,82 @@
+UseCases =>
+São os serviços que a aplicação deve fornecer para o usuario 
+Regra de negócio centralizada em uma ação específica do sistema
+Cada Use Case representa uma tarefa principal (ex: criar perfil, pintar sala)
+Não lida com detalhes técnicos (como banco ou API), só com o que deve acontecer segundo as regras da aplicação
+
+Payloads => 
+São os dados de entrada que o Use Case precisa para funcionar
+Define quais informações o sistema espera receber para executar aquela ação
+
+Responses => 
+São os dados de saída — ou seja, o que o Use Case retorna depois de ser executado
+Envia de volta as informações úteis, como o ID do novo pedido criado, status, mensagens, etc
+
+Use Case =>
+É onde fica a regra de negócio. Ele usa o Payload como entrada, executa o processo necessário, e retorna um Response
+É a parte principal, que diz o que o sistema deve fazer com os dados recebidos
+
+
+IMPORTANTE =>
+CTX.Objeto.Add(objeto)
+await ctx.SaveChangesAsync();
+
+Exemplo de Where Linq =>
+
+using InkFlow.Entities;
+using Microsoft.EntityFrameworkCore;
+
+namespace InkFlow.UseCases.SearchReadList;
+
+public class SearchReadListUseCase(InkFlowDbContext ctx)
+{
+    public async Task<Result<SearchReadListResponse>> Do(SearchReadListPayload payload)
+    {
+        // Basis Query
+        var query = ctx.readLists.AsQueryable();
+
+        // Filters
+
+        // ReadList Title
+        if (!string.IsNullOrWhiteSpace(payload.ReadListTitle))
+        {
+            query = query.Where(rl => rl.Title.Contains(payload.ReadListTitle));
+        }
+
+        // Author
+        if (!string.IsNullOrWhiteSpace(payload.AuthorName))
+        {
+            query = query.Where(rl => rl.Author.Username.Contains(payload.AuthorName));
+        }
+
+        // Story Title
+        if (!string.IsNullOrWhiteSpace(payload.StoryTitle))
+        {
+            query = query.Where(rl => rl.StoryLists
+                                        .Any(hl => hl.Story.Title.Contains(payload.StoryTitle)));
+        }
+
+        // Last Modification
+        if (payload.LastModification.HasValue)
+        {
+            query = query.Where(rl => rl.LastModification.Date == payload.LastModification.Value.Date);
+        }
+
+        // Include Data
+        query = query
+            .Include(rl => rl.Author)
+            .Include(rl => rl.StoryLists)
+                .ThenInclude(hl => hl.Story)
+                    .ThenInclude(s => s.Writer);
+
+        // Execute Query
+        var readLists = await query.ToListAsync();
+
+        // Return
+        return Result<SearchReadListResponse>.Success(new SearchReadListResponse
+        {
+            ReadLists = readLists
+        });
+    }
+}
+
