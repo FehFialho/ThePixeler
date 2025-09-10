@@ -1,0 +1,110 @@
+* Cenário
+
+Criar um endpoint /account/update-username que atualiza o username do usuário logado.
+
+* DTOs
+
+> UpdateUsernameRequest.cs
+
+namespace Concord.UseCases.UpdateUsername;
+
+public record UpdateUsernameRequest(Guid UserId, string Username);
+
+
+> UpdateUsernameResponse.cs
+
+namespace Concord.UseCases.UpdateUsername;
+
+public record UpdateUsernameResponse(
+    Guid UserId,
+    string NewUsername,
+    DateTime UpdatedAt
+);
+
+* UseCase
+
+> UpdateUsernameUseCase.cs
+
+using Concord.Entities;
+using Concord.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Concord.UseCases.UpdateUsername;
+
+public class UpdateUsernameUseCase(ConcordDbContext ctx)
+{
+    public async Task<Result<UpdateUsernameResponse>> ExecuteAsync(UpdateUsernameRequest request)
+    {
+        var user = await ctx.Users
+            .FirstOrDefaultAsync(u => u.ID == request.UserId);
+
+        if (user is null)
+            return Result<UpdateUsernameResponse>.Fail("User not found");
+
+        // Atualiza username
+        user.Username = request.Username;
+        user.UpdatedAt = DateTime.UtcNow;
+
+        await ctx.SaveChangesAsync();
+
+        var response = new UpdateUsernameResponse(
+            user.ID,
+            user.Username,
+            user.UpdatedAt
+        );
+
+        return Result<UpdateUsernameResponse>.Success(response);
+    }
+}
+
+* Endpoint (usando payload + JWT)
+
+> AccountEndpoint.cs
+
+using System.Security.Claims;
+using Concord.UseCases.UpdateUsername;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Concord.Endpoints;
+
+public static class AccountEndpoint
+{
+    public static void ConfigureAccountEndpoints(this WebApplication app)
+    {
+        app.MapPut("/account/update-username", async (
+            HttpContext http,
+            [FromBody] UsernamePayload payload, // vem do frontend
+            [FromServices] UpdateUsernameUseCase useCase) =>
+        {
+            // Extrair UserId do JWT
+            var claim = http.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (claim is null)
+                return Results.Unauthorized();
+
+            var userId = Guid.Parse(claim.Value);
+
+            // Criar DTO juntando UserId (JWT) + Username (frontend)
+            var request = new UpdateUsernameRequest(userId, payload.Username);
+
+            // Executar caso de uso
+            var response = await useCase.ExecuteAsync(request);
+
+            if (!response.IsSuccessfull)
+                return Results.BadRequest(response.Reason);
+
+            return Results.Ok(response.Value);
+
+        }).RequireAuthorization(); // precisa estar logado
+    }
+}
+
+// Classe auxiliar para representar o payload do frontend
+public record UsernamePayload(string Username);
+
+* Resumindo
+
+O frontend manda o body:
+
+{
+  "username": "fernanda"
+}
