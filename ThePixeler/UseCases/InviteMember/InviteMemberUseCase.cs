@@ -4,7 +4,7 @@ namespace ThePixeler.UseCases.InviteMember;
 
 public class InviteMemberUseCase( ThePixelerDbContext ctx )
 {
-    public async Task<Result<InviteMemberResponse>> Do(InviteMemberDTO  dto)
+    public async Task<Result<InviteMemberResponse>> Do(InviteMemberDTO  dto)//nao esquecer de arrumar aqui para invitememberDTo
     {
 
         var invite = new Invite
