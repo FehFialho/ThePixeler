@@ -38,7 +38,7 @@ public static class ViewInvitesEndPoints
             [FromServices] InviteMemberUseCase useCase,
             [FromServices] EFExtractJWTData extractJWTData,
             [FromBody] InviteMemberPayload payload,
-            HttpContext context
+            HttpContext context // Não esquecer do Context para poder tirar o JWT
         ) => 
         { 
             
@@ -66,12 +66,30 @@ public static class ViewInvitesEndPoints
         // Responder um Convite
         app.MapPost("respond-invite", async (
             [FromServices] RespondInviteUseCase useCase,
-            [FromBody] RespondInvitePayload payload, HttpRequest request) =>
+            [FromServices] EFExtractJWTData extractJWTData,
+            [FromBody] RespondInvitePayload payload, HttpRequest request,
+            HttpContext context
+        ) =>
         {
-            var result = await useCase.Do(payload);
+            // Extração e Verificação do JWT
+            var JwtUserID = await extractJWTData.GetUserGuid(context); 
+
+            if (JwtUserID is null)
+                return Results.Unauthorized();
+
+            // DTO
+            var dto = new RespondInviteDTO(
+                userID = JwtUserID,
+                inviteId = payload.inviteId,
+                response = payload.response,
+                roomID = payload.roomID
+            );
+
+            var result = await useCase.Do(dto);
             if (!result.IsSuccess)
                 return Results.BadRequest();
             return Results.Ok(result.Data);
+            
         }).RequireAuthorization();
     }
 }
