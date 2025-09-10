@@ -71,10 +71,7 @@ dotnet ef database update
 ```
 dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
 dotnet add package System.IdentityModel.Tokens.Jwt
-
 ```
-
-
 ## Endpoints
 * Utilizar UseCases para implementar os Endpoints.
 * Usar alguns serviços.
@@ -83,3 +80,80 @@ dotnet add package System.IdentityModel.Tokens.Jwt
 ## Swagger
 * Habilitar Swagger com ```dotnet add package Swashbuckle.AspNetCore```
 
+## Uso de JWT e DTOs nos Endpoints
+Para extrair o UserID do token JWT diretamente no endpoint, criar um DTO com os dados recebidos pelo front-end e enviar para o UseCase, siga o passo a passo abaixo:
+
+### 1. Criar o Payload do UseCase
+
+Defina um record com os dados que o front-end envia, sem incluir o UserID (que será extraído do JWT). Por exemplo:
+```
+public record EditProfileDataPayload(
+    string? Username,
+    string? Password,
+    string? Email,
+    string? ProfilePicture,
+    string? ProfileBio
+);
+```
+### 2. Criar o DTO para o Endpoint
+
+O DTO recebe o UserID extraído do JWT junto com os dados do payload:
+```
+public record EditProfileDataDTO(
+    Guid UserID,
+    string? Username,
+    string? Password,
+    string? Email,
+    string? ProfilePicture,
+    string? ProfileBio
+);
+```
+### 3. Extrair o UserID no Endpoint
+
+Utilize o serviço EFExtractJWTData (ou pegue a claim diretamente do HttpContext.User) para obter o UserID a partir do HttpContext:
+```
+// usando serviço
+var userID = await extractJWTData.GetUserGuid(http);
+if (userID is null)
+    return Results.Unauthorized();
+
+// ou pegando a claim diretamente
+var claim = http.User.FindFirst(ClaimTypes.NameIdentifier);
+if (claim is null)
+    return Results.Unauthorized();
+var userID = Guid.Parse(claim.Value);
+```
+### 4. Criar o DTO com o UserID e o Payload
+
+Combine os dados do front-end com o UserID extraído:
+```
+var dto = new EditProfileDataDTO(
+    UserID: userID.Value,
+    Username: payload.Username,
+    Password: payload.Password,
+    Email: payload.Email,
+    ProfilePicture: payload.ProfilePicture,
+    ProfileBio: payload.ProfileBio
+);
+```
+### 5. Passar o DTO para o UseCase
+O UseCase recebe apenas o DTO, sem precisar lidar com extração de JWT:
+
+```
+var result = await useCase.Do(dto);
+
+if (!result.IsSuccess)
+    return Results.BadRequest(result.Reason);
+
+return Results.Ok(result.Data);
+```
+
+### Resumo:
+
+Payload: dados enviados pelo front-end
+
+JWT: extraído no endpoint
+
+DTO: combina UserID do JWT + payload
+
+UseCase: recebe apenas o DTO pronto
