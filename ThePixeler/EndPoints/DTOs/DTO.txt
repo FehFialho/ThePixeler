@@ -1,3 +1,8 @@
+
+* Referencia
+
+Utilizar o UseCase de InviteMember como referência!
+
 * Cenário
 
 Criar um endpoint /account/update-username que atualiza o username do usuário logado.

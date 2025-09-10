@@ -4,17 +4,16 @@ namespace ThePixeler.UseCases.InviteMember;
 
 public class InviteMemberUseCase( ThePixelerDbContext ctx )
 {
-    public async Task<Result<InviteMemberResponse>> Do(InviteMemberPayload payload)
+    public async Task<Result<InviteMemberResponse>> Do(InviteMemberDTO  dto)
     {
 
         var invite = new Invite
         {
-            RoomID = payload.RoomID,
-            ReceiverID = payload.ReceiverID,
-            SenderID = payload.SenderID
+            RoomID = dto.RoomID,
+            ReceiverID = dto.ReceiverID,
+            SenderID = dto.SenderID
         };
 
-        // O invite vai automaticamente para a lista de invites do Receiver?
         ctx.Invites.Add(invite);
         await ctx.SaveChangesAsync();
 

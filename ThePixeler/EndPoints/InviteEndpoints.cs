@@ -5,6 +5,7 @@ using ThePixeler.UseCases.GetInvites;
 using ThePixeler.Services.ExtractJWTData;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using ThePixeler.EndPoints.DTOs;
+using ThePixeler.Models;
 
 namespace ThePixeler.EndPoints;
 // ViewInvites
@@ -32,24 +33,34 @@ public static class ViewInvitesEndPoints
 
         }).RequireAuthorization();
 
-        // Enviar Convite
+        // Enviar Convite ( Aqui Exemplo com DTO e JWT Extract! )
         app.MapPost("send-invite", async (
             [FromServices] InviteMemberUseCase useCase,
             [FromServices] EFExtractJWTData extractJWTData,
             [FromBody] InviteMemberPayload payload,
-            InviteEndpointDTO dto,
             HttpContext context
         ) => 
-        {
-            var senderID = await extractJWTData.GetUserGuid(context);
+        { 
+            
+            // Extração e Verificação do JWT
+            var senderID = await extractJWTData.GetUserGuid(context); 
+
             if (senderID is null)
                 return Results.Unauthorized();
 
-            var result = await useCase.Do(payload);
+            // Junção do Payload do Front + Informações do JWT
+            var dto = new InviteMemberDTO(
+                senderID.Value,
+                payload.ReceiverID,
+                payload.RoomID
+            );
+
+            // Enviar o DTO para o UseCase + Resposta
+            var result = await useCase.Do(dto);
             if (!result.IsSuccess)
                 return Results.BadRequest();
             return Results.Ok(result.Data);
-            
+
         }).RequireAuthorization();
 
         // Responder um Convite

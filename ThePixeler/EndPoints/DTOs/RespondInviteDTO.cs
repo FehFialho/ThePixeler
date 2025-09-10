@@ -1,6 +1,7 @@
-public record RespondInviteDTO(
-    int InviteID,
+namespace ThePixeler.EndPoints.DTOs;
+public record InviteEndpointDTO(
+    Guid SenderID, 
+    Guid ReceiverID,
     int RoomID,
-    Guid UserID,
     bool Response
 );
