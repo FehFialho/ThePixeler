@@ -1,3 +1,4 @@
+using ThePixeler.EndPoints.DTOs;
 using ThePixeler.Models;
 
 namespace ThePixeler.UseCases.InviteMember;

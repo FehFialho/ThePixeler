@@ -84,10 +84,10 @@ public static class ViewInvitesEndPoints
 
             // Cria DTO juntando Infos
             var dto = new RespondInviteDTO(
-                dtoUserID = dtoUserID,
-                inviteId = payload.inviteId,
-                response = payload.response,
-                roomID = payload.roomID
+                dtoUserID.Value,
+                payload.inviteId,
+                payload.response,
+                payload.roomID
             );
 
             var result = await useCase.Do(dto);
