@@ -63,13 +63,17 @@ dotnet ef database update
 
 ## JWT
 ```dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer```
+
 ```$env:JWT_SECRET```
+```$env:JWT_SECRET = "vW9f!2gH7pQ#kLmN4rT8yUvWxZ1aB3cD"```
+
 * Pode ser necessário instalar as seguintes bibliotecas:
 ```
 dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
 dotnet add package System.IdentityModel.Tokens.Jwt
 
 ```
+
 
 ## Endpoints
 * Utilizar UseCases para implementar os Endpoints.

@@ -1,0 +1,42 @@
+dotnet new web
+dotnet new gitignore
+
+// BAIXANDO MEF
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+
+// CONFIGURANDO VAR
+$env:SQL_CONNECTION = "Data Source=CA-C-0064T\SQLEXPRESS;Initial Catalog=ThePixeler;Trust Server Certificate=true;Integrated Security=true"
+
+//BAIXANDO EF
+dotnet tool install --global dotnet-ef
+dotnet ef migrations add InitialModel
+dotnet ef database update
+
+dotnet add package xunit
+dotnet add package xunit.runner.visualstudio
+dotnet add package Microsoft.NET.Test.Sdk
+dotnet add package Moq
+
+dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+
+dotnet add package Swashbuckle.AspNetCore
+
+// JWT SECRET
+$env:JWT_SECRET = "colocaralgumacoisabemgrandeaquiparaosecretfuncionar"
+
+// BIBLIOTECA USECASES
+dotnet add package UseCases
+
+dotnet ef migrations add SecondMigration
+dotnet ef database update
+
+USE ThePixeler;
+
+SELECT * FROM dbo.Subscriptions;
+
+SELECT * FROM Users;
+
+INSERT INTO Subscriptions VALUES ('Gratuito'), ('Gold'), ('PLatinum');
