@@ -12,6 +12,8 @@ public class RespondInviteUseCase (
     public async Task<Result<RespondInviteResponse>> Do(RespondInviteDTO dto)
     {
         
+        // Sempre confere os nulls após procurar itens no DB
+        
         var invite = await ctx.Invites.FindAsync(dto.inviteId);
         if (invite == null)
             return Result<RespondInviteResponse>.Fail("Invite not found");
@@ -28,13 +30,15 @@ public class RespondInviteUseCase (
         if (sender == null)
             return Result<RespondInviteResponse>.Fail("Sender not found");
 
+        // Se a resposta for true, adicionar a sala na lista do User!
         if (dto.response)
             user.Rooms.Add(room);
 
+        // Independente da resposta, remover o convite.
         user.InvitesReceived.Remove(invite);
         sender.InvitesSended.Remove(invite);
 
-        await ctx.SaveChangesAsync();
+        await ctx.SaveChangesAsync(); // Não esquecer de salvar as alterações!
 
         return Result<RespondInviteResponse>.Success(null);
     }

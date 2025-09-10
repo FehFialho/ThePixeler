@@ -14,26 +14,31 @@ public static class ViewInvitesEndPoints
     public static void ConfigureInviteEndpoints(this WebApplication app)
     {
 
-        // Get de invites
+        // <-- Get de invites -->
         app.MapGet("invites", async (
             [FromServices] GetInvitesUseCase useCase,
             [FromServices] EFExtractJWTData extractJWTData,
             HttpContext context
         ) =>
+        
         {
+            // Extract JWT
             var userID = await extractJWTData.GetUserGuid(context);
             if (userID is null)
                 return Results.Unauthorized();
 
-            var result = await useCase.Do(new (userID.Value)); // Exemplo de JWT Extract
-
+            var dto = new GetInvitesDTO(userID.Value); // Mandando o DTO sozinho já que só precisa do UserID
+            var result = await useCase.Do(dto);
+            
             if (!result.IsSuccess)
-                return Results.BadRequest();
+                return Results.BadRequest(result.Reason);
+
             return Results.Ok(result.Data);
 
         }).RequireAuthorization();
 
-        // Enviar Convite ( Aqui Exemplo com DTO e JWT Extract! )
+        // <-- Enviar Convite -->
+        // ( Aqui Exemplo com DTO e JWT Extract! )
         app.MapPost("send-invite", async (
             [FromServices] InviteMemberUseCase useCase,
             [FromServices] EFExtractJWTData extractJWTData,
@@ -63,7 +68,7 @@ public static class ViewInvitesEndPoints
 
         }).RequireAuthorization();
 
-        // Responder um Convite
+        // <--Responder um Convite-->
         app.MapPost("respond-invite", async (
             [FromServices] RespondInviteUseCase useCase,
             [FromServices] EFExtractJWTData extractJWTData,
@@ -72,14 +77,14 @@ public static class ViewInvitesEndPoints
         ) =>
         {
             // Extração e Verificação do JWT
-            var JwtUserID = await extractJWTData.GetUserGuid(context); 
+            var dtoUserID = await extractJWTData.GetUserGuid(context); 
 
-            if (JwtUserID is null)
+            if (dtoUserID is null)
                 return Results.Unauthorized();
 
-            // DTO
+            // Cria DTO juntando Infos
             var dto = new RespondInviteDTO(
-                userID = JwtUserID,
+                dtoUserID = dtoUserID,
                 inviteId = payload.inviteId,
                 response = payload.response,
                 roomID = payload.roomID
@@ -89,7 +94,7 @@ public static class ViewInvitesEndPoints
             if (!result.IsSuccess)
                 return Results.BadRequest();
             return Results.Ok(result.Data);
-            
+
         }).RequireAuthorization();
     }
 }
