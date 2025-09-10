@@ -24,10 +24,12 @@ public static class ViewInvitesEndPoints
             if (userID is null)
                 return Results.Unauthorized();
 
-            var result = await useCase.Do(new (userID.Value)); // JWT Extract
+            var result = await useCase.Do(new (userID.Value)); // Exemplo de JWT Extract
+
             if (!result.IsSuccess)
                 return Results.BadRequest();
             return Results.Ok(result.Data);
+
         }).RequireAuthorization();
 
         // Enviar Convite
@@ -43,15 +45,11 @@ public static class ViewInvitesEndPoints
             if (senderID is null)
                 return Results.Unauthorized();
 
-            // new InviteEndpointDTO
-            // {
-
-            // }
-
             var result = await useCase.Do(payload);
             if (!result.IsSuccess)
                 return Results.BadRequest();
             return Results.Ok(result.Data);
+            
         }).RequireAuthorization();
 
         // Responder um Convite

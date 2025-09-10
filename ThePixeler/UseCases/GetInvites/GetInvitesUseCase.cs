@@ -10,6 +10,11 @@ public class GetInvitesUseCase(
 {
     public async Task<Result<GetInvitesResponse>> Do(GetInvitesPayload payload)
     {        
-        return Result<GetInvitesResponse>.Success(null);
+        var invites = await ctx.Invites.Where(p => p.userID == payload.UserId).ToListAsync();
+        
+        if (invites == null)
+            return Result<GetPixelsResponse>.Fail("Usuário não encontrado!");
+
+        return Result<GetPixelsResponse>.Success(new(invites));
     }
 }
